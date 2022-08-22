@@ -1,5 +1,8 @@
 # go-appledev
 
+[![Go Reference](https://pkg.go.dev/badge/github.com/shawntoffel/go-appledev.svg)](https://pkg.go.dev/github.com/shawntoffel/go-appledev) 
+ [![Go Report Card](https://goreportcard.com/badge/github.com/shawntoffel/go-appledev)](https://goreportcard.com/report/github.com/shawntoffel/go-appledev) [![Build status](https://github.com/shawntoffel/go-appledev/actions/workflows/go.yml/badge.svg?branch=master)](https://github.com/shawntoffel/go-appledev/actions/workflows/go.yml)
+
 A library & command line application for generating signed developer tokens used to authenticate against Apple REST APIs. A valid signed JWT token is constructed using your private key, key ID, team ID, and service ID. 
 
 *go-appledev* is an open source project not affiliated with Apple Inc.
