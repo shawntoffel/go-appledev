@@ -15,6 +15,10 @@ A library & command line application for generating the signed developer tokens 
 ### Use as a library:
 ```go
 
+import (
+  "github.com/shawntoffel/go-appledev"
+ )
+
 // Initialize the API token provider.
 tokenProvider := appledev.ApiTokenProvider{
   KeyID:     "keyId",
