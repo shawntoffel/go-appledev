@@ -8,14 +8,16 @@ A library & command line application for generating the signed developer tokens 
 *go-appledev* is an open source project not affiliated with Apple Inc.
 
 ### Locating your identifiers:
-* **Key ID**: An identifier associated with your private key. It can be found on the [Certificates, Identifiers & Profiles](https://developer.apple.com/account/resources/authkeys/list) page under Keys. Click on the appropriate key to view the ID. 
-* **Team ID**: Found on the [account](https://developer.apple.com/account) page under Membership details.
-* **Service ID**: Found on the [Certificates, Identifiers & Profiles](https://developer.apple.com/account/resources/identifiers/list/serviceId) page under Identifiers. Make sure "Services IDs" is selected from the dropdown. 
+* **Key ID (kid)**: An identifier associated with your private key. It can be found on the [Certificates, Identifiers & Profiles](https://developer.apple.com/account/resources/authkeys/list) page under Keys. Click on the appropriate key to view the ID. 
+* **Team ID (tid)**: Found on the [account](https://developer.apple.com/account) page under Membership details.
+* **Service ID (sid)**: Found on the [Certificates, Identifiers & Profiles](https://developer.apple.com/account/resources/identifiers/list/serviceId) page under Identifiers. Make sure "Services IDs" is selected from the dropdown. 
 
 ## CLI usage:
 Precompiled binaries are available on the [Releases](https://github.com/shawntoffel/go-appledev/releases) page. 
-```sh
 
+![c (1)](https://user-images.githubusercontent.com/2343437/206641399-742224c3-fc6f-42ae-aaa3-144423acc9c9.gif)
+
+```sh
 Usage of ./appledev:
   token         Create an apple developer token.
   config        Generate a config file.
@@ -27,17 +29,17 @@ Usage of ./appledev token:
   -d duration
         How long the token will be valid for. (default 30m0s)
   -kid string
-        (required) The Key ID associated with your private key.
+        The Key ID associated with your private key.
   -pk string
-        (required) The path to a file containing your PEM encoded private key.
+        The path to a file containing your PEM encoded private key.
   -sid string
-        (required) The Service ID from your developer account.
+        The Service ID from your developer account.
   -tid string
-        (required) The Team ID from your developer account.
+        The Team ID from your developer account.
 ```
 Generate a token:
 ```sh
-./appledev token -pk AuthKey_ABCDE12345.p8 -kid keyId -sid serviceId -tid teamId
+./appledev token -pk AuthKey_ABCDE12345.p8 -d "1h" -kid keyId -sid serviceId -tid teamId
 ```
 
 Duration `d` is an optional `time.Duration` string for when the token will expire from now. Paraphrasing the Go documentation, it may contain a sequence of decimal numbers, each with an optional fraction and a unit suffix, such as "30m", "1.5h" or "2h45m". Valid time units are "ms", "s", "m", "h", "d", "w", "y".
@@ -48,13 +50,13 @@ A JSON config file may be used in place of args. The easiest way to create a con
 ```sh
 ./appledev config -pk AuthKey_ABCDE12345.p8 -o appledev_config.json
 ```
-appledev_config.json:
+
 ```json
 {
   "kid": "key ID",
   "tid": "team ID",
   "sid": "service ID",
-  "d": "10m",
+  "d": "30m",
   "pk": "-----BEGIN PRIVATE KEY-----\n-----END PRIVATE KEY-----"
 }
 ```
