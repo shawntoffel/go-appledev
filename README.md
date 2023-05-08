@@ -7,10 +7,29 @@ A library & command line application for generating the signed developer tokens 
 
 *go-appledev* is an open source project not affiliated with Apple Inc.
 
-### Locating your identifiers:
-* **Key ID (kid)**: An identifier associated with your private key. It can be found on the [Certificates, Identifiers & Profiles](https://developer.apple.com/account/resources/authkeys/list) page under Keys. Click on the appropriate key to view the ID. 
-* **Team ID (tid)**: Found on the [account](https://developer.apple.com/account) page under Membership details.
-* **Service ID (sid)**: Found on the [Certificates, Identifiers & Profiles](https://developer.apple.com/account/resources/identifiers/list/serviceId) page under Identifiers. Make sure "Services IDs" is selected from the dropdown. 
+## Library usage:
+Import as a Go module to generate the signed JWTs used for Apple API auth. 
+```go
+
+import (
+  "github.com/shawntoffel/go-appledev"
+)
+
+// Initialize the API token provider.
+tokenProvider := appledev.ApiTokenProvider{
+  KeyID:     "keyId",
+  TeamID:    "teamId",
+  ServiceID: "serviceId",
+  Duration:  time.Minute * 30,
+}
+
+// Fetch your private key bytes. 
+bytes, err := os.ReadFile(privateKeyFilePath)
+
+// Generate a signed JWT string.
+token, err := tokenProvider.SignedJWT(bytes)
+
+```
 
 ## CLI usage:
 Precompiled binaries are available on the [Releases](https://github.com/shawntoffel/go-appledev/releases) page. 
@@ -66,29 +85,10 @@ Generate a token using a config file:
 ```
 CLI args provided in addition to `-c` will take precedence over their value in the config file.
 
-## Library usage:
-This project may imported as a Go module for token generation on the fly.
-```go
-
-import (
-  "github.com/shawntoffel/go-appledev"
-)
-
-// Initialize the API token provider.
-tokenProvider := appledev.ApiTokenProvider{
-  KeyID:     "keyId",
-  TeamID:    "teamId",
-  ServiceID: "serviceId",
-  Duration:  time.Minute * 30,
-}
-
-// Fetch your private key bytes. 
-bytes, err := os.ReadFile(privateKeyFilePath)
-
-// Generate a signed JWT string.
-token, err := tokenProvider.SignedJWT(bytes)
-
-```
+## Locating your identifiers:
+* **Key ID (kid)**: An identifier associated with your private key. It can be found on the [Certificates, Identifiers & Profiles](https://developer.apple.com/account/resources/authkeys/list) page under Keys. Click on the appropriate key to view the ID. 
+* **Team ID (tid)**: Found on the [account](https://developer.apple.com/account) page under Membership details.
+* **Service ID (sid)**: Found on the [Certificates, Identifiers & Profiles](https://developer.apple.com/account/resources/identifiers/list/serviceId) page under Identifiers. Make sure "Services IDs" is selected from the dropdown. 
 
 ## Troubleshooting
 Please use the GitHub [Discussions](https://github.com/shawntoffel/go-appledev/discussions) tab for questions regarding this client library.
